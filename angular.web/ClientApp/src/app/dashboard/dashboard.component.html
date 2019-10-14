@@ -1,0 +1,57 @@
+<h1 id="tableLabel">Weather dashboard</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <label class="badge badge-light">Select city: </label>
+      <select class="browser-default custom-select" [(ngModel)]="selectedCity" [ngModelOptions]="{standalone: true}" (change)="cityChange()">
+        <option *ngFor="let city of cities" [ngValue]="city">
+          {{city.name}}
+        </option>
+      </select>
+    </div>
+    <div class="col-6">
+      <label class="badge badge-light">Scale: </label>
+      <select class="browser-default custom-select" [(ngModel)]="selectedScale" [ngModelOptions]="{standalone: true}" (change)="scaleChange()">
+        <option *ngFor="let scale of scales" [ngValue]="scale">
+          {{scale.name}}
+        </option>
+      </select>
+    </div>
+
+    <!--Not used because weather API don't allow historical weather data to free users-->
+    <!--<div>
+      <label class="badge badge-light">Date: </label>
+      <form class="form-inline col-6">
+        <div class="form-group">
+          <div class="input-group">
+            <input class="form-control" placeholder="YYYY-MM-DD" [(ngModel)]="selectedDate" [ngModelOptions]="{standalone: true}" ngbDatepicker #d="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>-->
+  </div>
+</div>
+
+<div *ngIf="chart">
+  <canvas id="canvas">{{ chart }}</canvas>
+</div>
+
+<table class='table table-striped' aria-labelledby="tableLabel">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Temperature</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let forecast of forecasts">
+      <td>{{ forecast.datetime }}</td>
+      <td>{{ forecast.temp}}</td>
+    </tr>
+  </tbody>
+</table>
+
